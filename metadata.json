@@ -1,26 +1,17 @@
+
 {
-  "name": "ANAI.ai — Creator Architect",
-  "description": "The ultimate creator utility platform. Architect digital assets, music blueprints, and brand strategies using advanced neural automation tools.",
+  "name": "ANAI.ai — Build Your Empire",
+  "description": "The world's most powerful AI creation and automation platform for creators, entrepreneurs, and artists.",
   "requestFramePermissions": [
     "camera",
     "microphone",
-    "geolocation"
+    "geolocation",
+    "photoLibrary"
   ],
   "permissions": {
-    "camera": "Camera access is used for capturing brand assets for your digital blueprints.",
-    "microphone": "Microphone access is used for voice-command creation and audio analysis.",
-    "photoLibrary": "Photo access allows you to save and manage your generated digital assets.",
-    "geolocation": "Location data helps optimize local market strategy blueprints."
-  },
-  "short_description": "Architect your digital empire with AI.",
-  "keywords": [
-    "creator tools",
-    "ai generator",
-    "music production",
-    "automation",
-    "brand architect",
-    "digital products"
-  ],
-  "support_url": "https://hoodstar365.com/support",
-  "privacy_url": "https://hoodstar365.com/privacy"
+    "camera": "Camera access is used for AI content creation features.",
+    "microphone": "Microphone access is used for voice input and audio generation.",
+    "photoLibrary": "Photo access allows uploading and saving generated content.",
+    "geolocation": "Location is used to personalize app experiences."
+  }
 }

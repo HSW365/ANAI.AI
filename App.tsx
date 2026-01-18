@@ -17,7 +17,6 @@ import Terms from './pages/Terms';
 import Settings from './pages/Settings';
 import Support from './pages/Support';
 import SubmitTrack from './pages/SubmitTrack';
-import KeyGate from './components/KeyGate';
 import { notificationService } from './services/notificationService';
 import { creditService } from './services/creditService';
 import { walletService, WalletState } from './services/walletService';
@@ -97,7 +96,7 @@ const Header = () => {
         
         <div className="flex gap-4 items-center">
           <div className="hidden sm:flex bg-white/5 border border-white/10 px-4 py-2 rounded-xl items-center gap-3">
-             <span className="text-[9px] font-black text-white/40 uppercase tracking-widest">Vault</span>
+             <span className="text-[9px] font-black text-white/40 uppercase tracking-widest">Bank</span>
              <span className="text-xs font-black text-[#00e0a4]">{credits === 999 ? '∞' : credits} <span className="text-[8px] opacity-40">CREDITS</span></span>
           </div>
 
@@ -116,7 +115,7 @@ const Header = () => {
           )}
 
           <Link to="/pricing" className="bg-[#00e0a4] text-[#041b14] px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-white transition-all shadow-xl shadow-[#00e0a4]/10">
-            Upgrade
+            Top Up
           </Link>
         </div>
       </div>
@@ -125,12 +124,9 @@ const Header = () => {
 };
 
 const App: React.FC = () => {
-  const [isKeyValidated, setIsKeyValidated] = useState(false);
-
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        {!isKeyValidated && <KeyGate onValidated={() => setIsKeyValidated(true)} />}
         <Header />
         <main className="flex-grow pb-32">
           <Routes>
