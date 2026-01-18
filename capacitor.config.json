@@ -1,0 +1,13 @@
+
+{
+  "appId": "com.hoodstar365.anai",
+  "appName": "ANAI.ai",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "always"
+  }
+}
