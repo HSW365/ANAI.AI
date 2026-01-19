@@ -1,29 +1,32 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Wallet from './pages/Wallet';
-import Credits from './pages/Credits';
-import Settings from './pages/Settings';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
-import Support from './pages/Support';
+import React, { useState } from 'react';
+import { View } from './types';
+import { Layout } from './components/Layout';
+import { ChatView } from './components/ChatView';
+import { ImageView } from './components/ImageView';
+import { SearchView } from './components/SearchView';
+import { LiveView } from './components/LiveView';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
+  const [activeView, setActiveView] = useState<View>(View.CHAT);
+
+  const renderView = () => {
+    switch (activeView) {
+      case View.CHAT:
+        return <ChatView />;
+      case View.IMAGE:
+        return <ImageView />;
+      case View.SEARCH:
+        return <SearchView />;
+      case View.LIVE:
+        return <LiveView />;
+      default:
+        return <ChatView />;
+    }
+  };
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/wallet" element={<Wallet />} />
-        <Route path="/credits" element={<Credits />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/support" element={<Support />} />
-      </Routes>
-    </Router>
+    <Layout activeView={activeView} onViewChange={setActiveView}>
+      {renderView()}
+    </Layout>
   );
 };
-
-export default App;
-
-
