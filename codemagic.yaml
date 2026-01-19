@@ -1,1 +1,15 @@
+workflows:
+  ios_app:
+    name: iOS Build
+    environment:
+      node: lts
+    scripts:
+      - name: Install
+        script: npm install
+      - name: Build
+        script: npm run build
+      - name: Capacitor iOS
+        script: |
+          npx cap add ios || true
+          npx cap sync ios
 
