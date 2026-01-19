@@ -1,30 +1,21 @@
 
-export enum AppSection {
-  HOME = 'home',
-  SUBMIT = 'submit',
-  MERCH = 'merch',
-  AI_LAB = 'ai_lab',
-  PODCAST = 'podcast',
-  BOOKING = 'booking'
+export enum View {
+  CHAT = 'CHAT',
+  IMAGE = 'IMAGE',
+  LIVE = 'LIVE',
+  SEARCH = 'SEARCH'
 }
 
-export interface TrackSubmission {
-  artist: string;
-  title: string;
-  email: string;
-  file: File | null;
+export interface Message {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: number;
+  image?: string;
+  groundingLinks?: { title: string; uri: string }[];
 }
 
-export interface BookingRequest {
-  org: string;
-  email: string;
-  date: string;
-  notes: string;
-}
-
-export interface AIAnalysisResult {
-  sentiment: string;
-  genreSuggestion: string;
-  marketingHook: string;
-  aiCritique: string;
+export interface GenerationState {
+  isGenerating: boolean;
+  error: string | null;
 }

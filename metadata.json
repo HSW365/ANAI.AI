@@ -1,17 +1,8 @@
-
 {
-  "name": "ANAI.ai — Build Your Empire",
-  "description": "The world's most powerful AI creation and automation platform for creators, entrepreneurs, and artists.",
+  "name": "Anai AI Mobile",
+  "description": "A high-end, mobile-first AI assistant featuring real-time voice, search grounding, and advanced image generation powered by Gemini.",
   "requestFramePermissions": [
     "camera",
-    "microphone",
-    "geolocation",
-    "photoLibrary"
-  ],
-  "permissions": {
-    "camera": "Camera access is used for AI content creation features.",
-    "microphone": "Microphone access is used for voice input and audio generation.",
-    "photoLibrary": "Photo access allows uploading and saving generated content.",
-    "geolocation": "Location is used to personalize app experiences."
-  }
+    "microphone"
+  ]
 }
