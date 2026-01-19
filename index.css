@@ -1,0 +1,19 @@
+---------------- 8< ----------------
+/* ANAI.ai Creator Architect – global styles */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+body {
+margin: 0;
+font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+"Helvetica Neue", Arial, sans-serif;
+line-height: 1.5;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#root {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+}
+---------------- >8 ----------------
