@@ -27,11 +27,10 @@ const App: React.FC = () => {
   return (
     <Layout activeView={activeView} onViewChange={setActiveView}>
       {renderView()}
-    </Layout> 
-    };
-
-export default App;
+    </Layout>
   );
 };
 
 export default App;
+export { App };
+
