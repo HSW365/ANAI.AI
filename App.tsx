@@ -6,7 +6,7 @@ import { ImageView } from './components/ImageView';
 import { SearchView } from './components/SearchView';
 import { LiveView } from './components/LiveView';
 
-export const App: React.FC = () => {
+const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>(View.CHAT);
 
   const renderView = () => {
@@ -30,3 +30,5 @@ export const App: React.FC = () => {
     </Layout>
   );
 };
+
+export default App;
