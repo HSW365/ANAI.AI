@@ -25,5 +25,12 @@ const App: React.FC = () => {
   );
 };
 
+/**
+ * HARD FIX:
+ * Export BOTH default and named.
+ * This guarantees Vite/Rollup will always find App.
+ */
 export default App;
+export { App };
+
 
