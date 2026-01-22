@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 6354aee (fix: remove merge conflict markers from index.tsx)
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -21,7 +17,3 @@ root.render(
   </React.StrictMode>
 );
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 6354aee (fix: remove merge conflict markers from index.tsx)
