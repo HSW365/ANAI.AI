@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React from 'react';
+=======
+﻿import React from 'react';
+>>>>>>> e8c9c57 (fix: correct component paths and index bootstrap)
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
@@ -10,6 +14,7 @@ if (!rootElement) {
 }
 
 const root = ReactDOM.createRoot(rootElement);
+<<<<<<< HEAD
 
 root.render(
   <React.StrictMode>
@@ -17,3 +22,11 @@ root.render(
   </React.StrictMode>
 );
 
+=======
+
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+>>>>>>> e8c9c57 (fix: correct component paths and index bootstrap)
