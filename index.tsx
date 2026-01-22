@@ -1,34 +1,19 @@
-import React, { useState } from 'react';
-import { View } from './types';
-import { Layout } from './components/Layout';
-import { ChatView } from './components/ChatView';
-import { ImageView } from './components/ImageView';
-import { SearchView } from './components/SearchView';
-import { LiveView } from './components/LiveView';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
 
-const App: React.FC = () => {
-  const [activeView, setActiveView] = useState<View>(View.CHAT);
+const rootElement = document.getElementById('root');
 
-  const renderView = () => {
-    switch (activeView) {
-      case View.CHAT:
-        return <ChatView />;
-      case View.IMAGE:
-        return <ImageView />;
-      case View.SEARCH:
-        return <SearchView />;
-      case View.LIVE:
-        return <LiveView />;
-      default:
-        return <ChatView />;
-    }
-  };
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
 
-  return (
-    <Layout activeView={activeView} onViewChange={setActiveView}>
-      {renderView()}
-    </Layout>
-  );
-};
+const root = ReactDOM.createRoot(rootElement);
 
-export default App;
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
