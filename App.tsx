@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { View } from './types';
 import { Layout } from './components/Layout';
@@ -32,5 +33,4 @@ const App: React.FC = () => {
 };
 
 export default App;
-export { App };
 
