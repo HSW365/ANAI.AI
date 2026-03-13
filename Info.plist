@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+
+	<key>CFBundleDisplayName</key>
+	<string>Anai.ai</string>
+
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+
+	<!-- Required: declare no custom encryption beyond standard HTTPS -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+
+	<!-- Launch screen (storyboard-based, Capacitor default) -->
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+
+	<!-- arm64 only — armv7 was removed in Xcode 14 / iOS 11 -->
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+
+	<!-- Portrait primary, landscape allowed -->
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+
+	<!-- WKWebView domain allowlist — required when limitsNavigationsToAppBoundDomains is true -->
+	<key>WKAppBoundDomains</key>
+	<array>
+		<string>anaiai.co</string>
+		<string>www.anaiai.co</string>
+	</array>
+
+	<!-- Privacy usage descriptions — Apple rejects submissions missing these
+	     if web content ever requests the relevant permission -->
+	<key>NSCameraUsageDescription</key>
+	<string>Anai.ai uses the camera to let you capture product photos and videos for AI marketing content generation.</string>
+
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Anai.ai uses the microphone to let you record audio for AI-generated video scripts and marketing content.</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Anai.ai accesses your photo library so you can upload product images and videos to generate marketing content.</string>
+
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Anai.ai saves generated marketing images and assets to your photo library.</string>
+
+	<key>NSFaceIDUsageDescription</key>
+	<string>Anai.ai uses Face ID to securely authenticate your account.</string>
+
+</dict>
+</plist>
