@@ -1,7 +1,7 @@
 {
-	"appId": "com.anai.app",
-	"appName": "Anai.ai",
-	"webDir": "dist/public",
+	"appId": "co.anaiai.app",
+	"appName": "ANAI.AI",
+	"webDir": "dist",
 	"server": {
 		"url": "https://anaiai.co",
 		"cleartext": false,
@@ -10,21 +10,24 @@
 	"ios": {
 		"contentInset": "always",
 		"scrollEnabled": true,
-		"backgroundColor": "#0a0a0a",
+		"backgroundColor": "#0a0a0f",
 		"preferredContentMode": "mobile",
-		"limitsNavigationsToAppBoundDomains": true
+		"limitsNavigationsToAppBoundDomains": true,
+		"scheme": "co.anaiai.app"
 	},
 	"plugins": {
 		"SplashScreen": {
 			"launchShowDuration": 2000,
-			"backgroundColor": "#0a0a0a",
+			"backgroundColor": "#0a0a0f",
 			"showSpinner": false,
 			"splashFullScreen": true,
-			"splashImmersive": true
+			"splashImmersive": true,
+			"androidSplashResourceName": "splash",
+			"iosSplashResourceName": "Default"
 		},
 		"StatusBar": {
 			"style": "dark",
-			"backgroundColor": "#0a0a0a"
+			"backgroundColor": "#0a0a0f"
 		}
 	},
 	"packageClassList": []

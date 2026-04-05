@@ -1,20 +1,51 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# ANAI.AI — App Store Submission Files
+Domain: anaiai.co | Bundle ID: co.anaiai.app
 
-# Run and deploy your AI Studio app
+## Where each file goes in your project
 
-This contains everything you need to run your app locally.
+| File | Destination in your repo |
+|------|--------------------------|
+| capacitor.config.json | project root |
+| codemagic.yaml | project root |
+| components/LiveView.tsx | src/components/LiveView.tsx |
+| ios/App/Info.plist | ios/App/Info.plist |
+| ios/App/AppDelegate.swift | ios/App/App/AppDelegate.swift |
+| ios/App/Podfile | ios/App/Podfile |
+| ios/App/PrivacyInfo.xcprivacy | ios/App/App/PrivacyInfo.xcprivacy |
 
-View your app in AI Studio: https://ai.studio/apps/drive/1g1lqdjOCU2ulZdksAkESWS1m_tOgXiFB
+## Before pushing to Codemagic
 
-## Run Locally
+1. Set these env vars in Codemagic dashboard:
+   - APP_STORE_CONNECT_PRIVATE_KEY  (.p8 file contents)
+   - APP_STORE_CONNECT_KEY_IDENTIFIER  (Key ID)
+   - APP_STORE_CONNECT_ISSUER_ID  (Issuer ID)
+   - APP_STORE_APPLE_ID  (numeric app ID)
+   - VITE_GEMINI_API_KEY  (Gemini API key)
 
-**Prerequisites:**  Node.js
+2. In Apple Developer account:
+   - Register bundle ID: co.anaiai.app
+   - Create App Store Distribution certificate
+   - Create App Store provisioning profile
+   - Create App Store Connect API key
 
+3. In Xcode:
+   - PRODUCT_BUNDLE_IDENTIFIER = co.anaiai.app
+   - MARKETING_VERSION = 1.0.0
+   - CURRENT_PROJECT_VERSION = 1
+   - Add Associated Domains: applinks:anaiai.co
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+4. Host at anaiai.co before submitting:
+   - /.well-known/apple-app-site-association
+   - /privacy
+   - /terms
+   - /support
+
+5. Run locally:
+   npm install && npm run build
+   cd ios/App && pod install --repo-update
+   npx cap sync ios
+
+## In-App Subscription IDs for App Store Connect
+   co.anaiai.app.basic   — web apps & AI websites
+   co.anaiai.app.pro     — Apple & Google Store apps
+   co.anaiai.app.elite   — custom AI models & workflows

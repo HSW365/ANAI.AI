@@ -1,15 +1,84 @@
 workflows:
   ios_app:
-    name: iOS Build
+    name: ANAI.AI iOS — App Store
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+
     environment:
       node: lts
+      xcode: latest
+      cocoapods: default
+      vars:
+        BUNDLE_ID: co.anaiai.app
+        APP_STORE_APPLE_ID: $(APP_STORE_APPLE_ID)
+      groups:
+        - app_store_credentials
+        - signing_credentials
+
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+
     scripts:
-      - name: Install
+      - name: Set version and build number
+        script: |
+          BUILD_NUMBER=$(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID") + 1))
+          cd ios/App
+          agvtool new-version -all $BUILD_NUMBER
+
+      - name: Install node dependencies
         script: npm install
-      - name: Build
+
+      - name: Build web assets
         script: npm run build
-      - name: Capacitor iOS
+
+      - name: Capacitor sync
         script: |
           npx cap add ios || true
           npx cap sync ios
 
+      - name: Install CocoaPods
+        script: |
+          cd ios/App
+          pod install --repo-update
+
+      - name: Set up code signing
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
+
+      - name: Build and archive
+        script: |
+          cd ios/App
+          xcode-project build-ipa \
+            --workspace App.xcworkspace \
+            --scheme App \
+            --config Release
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+
+    publishing:
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        submit_to_testflight: true
+        submit_to_app_store: false
+        beta_groups:
+          - ANAI.AI Testers
+      email:
+        recipients:
+          - builds@anaiai.co
+        notify:
+          success: true
+          failure: true
