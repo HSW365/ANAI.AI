@@ -30,7 +30,9 @@ workflows:
           agvtool new-version -all $BUILD_NUMBER
 
       - name: Install node dependencies
-        script: npm install
+        script: |
+          npm install
+          npm install -g @capacitor/cli
 
       - name: Build web assets
         script: npm run build
