@@ -10,6 +10,8 @@ workflows:
       vars:
         BUNDLE_ID: co.anaiai.app
         APP_STORE_APPLE_ID: $(APP_STORE_APPLE_ID)
+        APP_STORE_CONNECT_ISSUER_ID: d2aeeca9-68b4-480e-96e0-edced6996d56
+        APP_STORE_CONNECT_KEY_IDENTIFIER: GPLBXCQF6U
       groups:
         - app_store_credentials
         - signing_credentials
