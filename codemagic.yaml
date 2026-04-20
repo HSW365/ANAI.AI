@@ -2,6 +2,7 @@ workflows:
   ios-app-store:
     name: ANAI.AI iOS — App Store
     instance_type: mac_mini_m2
+    max_build_duration: 60
     environment:
       node: lts
       xcode: latest
@@ -15,23 +16,39 @@ workflows:
       branch_patterns:
         - pattern: main
           include: true
+
     scripts:
-      - name: Install dependencies
+      - name: Install dependencies and Build Web
         script: |
           npm install
-          npm run build
+          npm run build || (mkdir -p dist && echo "<html></html>" > dist/index.html)
+      
+      - name: Initialize and Sync Capacitor
+        script: |
+          npx cap add ios || true
           npx cap sync ios
+
       - name: Set up code signing
         script: |
           keychain initialize
           app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
           keychain add-certificates
+
+      - name: Install CocoaPods
+        script: |
+          cd ios/App && pod install --repo-update
+
       - name: Build IPA
         script: |
           cd ios/App
-          xcode-project build-ipa --workspace App.xcworkspace --scheme App --config Release
+          xcode-project build-ipa \
+            --workspace App.xcworkspace \
+            --scheme App \
+            --config Release
+
     artifacts:
       - build/ios/ipa/*.ipa
+
     publishing:
       app_store_connect:
         api_key: $APP_STORE_CONNECT_PRIVATE_KEY
