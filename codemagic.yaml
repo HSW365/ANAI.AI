@@ -1,31 +1,10 @@
-scripts:
-      - name: Set version and build number
+- name: Set version and build number
         script: |
-          # Fallback to 1 if it's the first build
+          # Use a fallback of 0 if no build exists yet
           LATEST_BUILD=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID")
           BUILD_NUMBER=$((${LATEST_BUILD:-0} + 1))
           cd ios/App
-          # This ensures the version matches your listing.md
+          # marketing version must match your App Store Connect version (1.0.0)
           agvtool new-marketing-version 1.0.0
           agvtool new-version -all $BUILD_NUMBER
-
-      - name: Install dependencies and build
-        script: |
-          npm install
-          npm run build
-          npx cap sync ios
-
-      - name: Set up code signing
-        script: |
-          keychain initialize
-          # This creates the necessary certificates in the cloud for you
-          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
-          keychain add-certificates
-          
-      - name: Build IPA
-        script: |
-          cd ios/App
-          xcode-project build-ipa \
-            --workspace App.xcworkspace \
-            --scheme App \
-            --config Release
+    
