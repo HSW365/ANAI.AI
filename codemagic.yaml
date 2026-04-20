@@ -1,76 +1,40 @@
 workflows:
   ios-app-store:
     name: ANAI.AI iOS — App Store
-    max_build_duration: 60
     instance_type: mac_mini_m2
     environment:
       node: lts
       xcode: latest
-      cocoapods: default
       vars:
         BUNDLE_ID: "co.anaiai.app"
       groups:
         - app_store_credentials
-        - signing_credentials
     triggering:
       events:
         - push
       branch_patterns:
         - pattern: main
           include: true
-
     scripts:
-      - name: Set version and build number
-        script: | 
-          # PC Fix: Fallback to 1 if no previous builds exist
-          LATEST_BUILD=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID")
-          BUILD_NUMBER=$((${LATEST_BUILD:-0} + 1))
-          cd ios/App
-          agvtool new-marketing-version 1.0.0
-          agvtool new-version -all $BUILD_NUMBER
-
       - name: Install dependencies
         script: |
           npm install
-          npm install -g @capacitor/cli
           npm run build
-
-      - name: Capacitor Sync
-        script: |
-          npx cap add ios || true
           npx cap sync ios
-
       - name: Set up code signing
         script: |
           keychain initialize
-          # PC Fix: Automatically creates certificates in Apple's cloud for you
           app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
           keychain add-certificates
-
-      - name: Install CocoaPods
-        script: |
-          cd ios/App
-          pod install --repo-update
-
       - name: Build IPA
         script: |
           cd ios/App
-          xcode-project build-ipa \
-            --workspace App.xcworkspace \
-            --scheme App \
-            --config Release
-
+          xcode-project build-ipa --workspace App.xcworkspace --scheme App --config Release
     artifacts:
       - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
-
     publishing:
       app_store_connect:
         api_key: $APP_STORE_CONNECT_PRIVATE_KEY
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
         issuer_id: $APP_STORE_CONNECT_ISSUER_ID
         submit_to_testflight: true
-        submit_to_app_store: false
-      email:
-        recipients:
-          - hoodstarent365@gmail.com
