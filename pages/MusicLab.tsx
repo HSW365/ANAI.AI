@@ -325,10 +325,11 @@ const MusicLab: React.FC = () => {
                            </div>
                         ))}
                       </div>
-                    </section>
-                  </div>
+                    </div>
+                  </section>
+                </div>
 
-                  <div className="mt-16 pt-12 border-t border-white/5 relative z-10 text-center">
+                <div className="mt-16 pt-12 border-t border-white/5 relative z-10 text-center">
                     <p className="text-[10px] font-black uppercase text-white/20 tracking-[0.5em] mb-6">Built by ANAI.ai Neural Distribution Cluster</p>
                     <div className="flex justify-center gap-4">
                        <a href="https://hsw365media.com" target="_blank" className="bg-white text-black px-12 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-[#00e0a4] transition-all shadow-xl">List on Media Hub ↗</a>

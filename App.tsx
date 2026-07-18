@@ -1,90 +1,136 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenerativeAI } from "@google/genai";
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 
-const App: React.FC = () => {
-  const [messages, setMessages] = useState<{role: string, text: string}[]>([]);
-  const [input, setInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
+import Home from './pages/Home';
+import Build from './pages/Build';
+import AppBuilder from './pages/AppBuilder';
+import MusicLab from './pages/MusicLab';
+import MemeLab from './pages/MemeLab';
+import Capital from './pages/Capital';
+import Ecommerce from './pages/Ecommerce';
+import AILab from './pages/AILab';
+import Lab from './pages/Lab';
+import Automate from './pages/Automate';
+import Booking from './pages/Booking';
+import Merch from './pages/Merch';
+import Podcast from './pages/Podcast';
+import Pricing from './pages/Pricing';
+import Notifications from './pages/Notifications';
+import Settings from './pages/Settings';
+import Support from './pages/Support';
+import SubmitTrack from './pages/SubmitTrack';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
-  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+const NAV_LINKS: { label: string; to: string }[] = [
+  { label: 'Home', to: '/' },
+  { label: 'Build', to: '/build' },
+  { label: 'App Architect', to: '/app-builder' },
+  { label: 'Music Lab', to: '/music-lab' },
+  { label: 'Meme Forge', to: '/meme-lab' },
+  { label: 'Capital', to: '/capital' },
+  { label: 'Commerce', to: '/ecommerce' },
+  { label: 'Pricing', to: '/pricing' },
+];
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  const handleSend = async () => {
-    if (!input.trim()) return;
-    
-    const userMsg = { role: 'user', text: input };
-    setMessages(prev => [...prev, userMsg]);
-    setInput('');
-    setIsTyping(true);
-
-    try {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      const result = await model.generateContentStream(input);
-      
-      let assistantText = "";
-      setMessages(prev => [...prev, { role: 'assistant', text: '' }]);
-
-      for await (const chunk of result.stream) {
-        const chunkText = chunk.text();
-        assistantText += chunkText;
-        setMessages(prev => {
-          const newMsgs = [...prev];
-          newMsgs[newMsgs.length - 1].text = assistantText;
-          return newMsgs;
-        });
-      }
-    } catch (error) {
-      console.error("AI Error:", error);
-    } finally {
-      setIsTyping(false);
-    }
-  };
+const TopNav: React.FC = () => {
+  const location = useLocation();
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col h-screen bg-[#0a0a0f] text-white font-sans">
-      <header className="p-6 border-b border-white/10 bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-10">
-        <h1 className="text-xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-          anaiai.co
-        </h1>
-      </header>
-
-      <main className="flex-1 overflow-y-auto p-4 space-y-6">
-        {messages.map((m, i) => (
-          <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[85%] p-4 rounded-2xl ${
-              m.role === 'user' 
-              ? 'bg-blue-600 rounded-tr-none' 
-              : 'bg-white/5 border border-white/10 rounded-tl-none'
-            }`}>
-              <p className="text-sm leading-relaxed">{m.text}</p>
-            </div>
-          </div>
-        ))}
-        {isTyping && <div className="text-xs text-white/40 animate-pulse">Architecting response...</div>}
-        <div ref={scrollRef} />
-      </main>
-
-      <footer className="p-4 border-t border-white/10 bg-[#0a0a0f] pb-10">
-        <div className="relative flex items-center">
-          <input 
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Describe your vision..."
-            className="w-full bg-white/5 border border-white/10 rounded-full py-4 px-6 pr-16 focus:outline-none focus:border-blue-500 transition-all"
-          />
-          <button onClick={handleSend} className="absolute right-2 p-2 bg-white text-black rounded-full hover:bg-blue-400 transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-          </button>
+    <header className="sticky top-0 z-40 bg-[#0a0a0f]/90 backdrop-blur-md border-b border-white/5">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <Link to="/" className="text-lg font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#00e0a4] to-white">
+          ANAI.ai
+        </Link>
+        <nav className="hidden lg:flex items-center gap-6">
+          {NAV_LINKS.map(link => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`text-[10px] font-black uppercase tracking-widest transition-colors ${
+                location.pathname === link.to ? 'text-[#00e0a4]' : 'text-white/40 hover:text-white'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="hidden lg:flex items-center gap-4">
+          <Link to="/settings" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">
+            Settings
+          </Link>
         </div>
-      </footer>
-    </div>
+        <button
+          onClick={() => setOpen(o => !o)}
+          className="lg:hidden text-white/60 hover:text-white p-2"
+          aria-label="Toggle menu"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+      {open && (
+        <nav className="lg:hidden border-t border-white/5 px-6 py-4 flex flex-col gap-4">
+          {[...NAV_LINKS, { label: 'Settings', to: '/settings' }].map(link => (
+            <Link
+              key={link.to}
+              to={link.to}
+              onClick={() => setOpen(false)}
+              className={`text-xs font-black uppercase tracking-widest ${
+                location.pathname === link.to ? 'text-[#00e0a4]' : 'text-white/50'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+      )}
+    </header>
+  );
+};
+
+const AppShell: React.FC = () => (
+  <div className="min-h-screen bg-[#0a0a0f] text-white font-sans overflow-y-auto">
+    <TopNav />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/build" element={<Build />} />
+      <Route path="/app-builder" element={<AppBuilder />} />
+      <Route path="/music-lab" element={<MusicLab />} />
+      <Route path="/meme-lab" element={<MemeLab />} />
+      <Route path="/capital" element={<Capital />} />
+      <Route path="/ecommerce" element={<Ecommerce />} />
+      <Route path="/ai-lab" element={<AILab />} />
+      <Route path="/lab" element={<Lab />} />
+      <Route path="/automate" element={<Automate />} />
+      <Route path="/booking" element={<Booking />} />
+      <Route path="/merch" element={<Merch />} />
+      <Route path="/podcast" element={<Podcast />} />
+      <Route path="/pricing" element={<Pricing />} />
+      <Route path="/notifications" element={<Notifications />} />
+      <Route path="/settings" element={<Settings />} />
+      <Route path="/support" element={<Support />} />
+      <Route path="/submit-track" element={<SubmitTrack />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="*" element={<Home />} />
+    </Routes>
+  </div>
+);
+
+// NOTE: KeyGate.tsx targets window.aistudio.* — a Google AI Studio preview-only
+// API that does not exist in the deployed web/iOS/Android build. The real app
+// uses the GEMINI_API_KEY injected at build time (see vite.config.ts), so the
+// gate is intentionally not mounted here. Left in components/ in case a
+// bring-your-own-key flow is wanted later behind a feature flag.
+const App: React.FC = () => {
+  return (
+    <BrowserRouter>
+      <AppShell />
+    </BrowserRouter>
   );
 };
 
 export default App;
-

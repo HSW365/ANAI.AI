@@ -19,3 +19,10 @@ export interface GenerationState {
   isGenerating: boolean;
   error: string | null;
 }
+
+export interface AIAnalysisResult {
+  sentiment: string;
+  genreSuggestion: string;
+  marketingHook: string;
+  aiCritique: string;
+}
