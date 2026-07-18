@@ -121,10 +121,10 @@ const AppShell: React.FC = () => (
 );
 
 // NOTE: KeyGate.tsx targets window.aistudio.* — a Google AI Studio preview-only
-// API that does not exist in the deployed web/iOS/Android build. The real app
-// uses the GEMINI_API_KEY injected at build time (see vite.config.ts), so the
-// gate is intentionally not mounted here. Left in components/ in case a
-// bring-your-own-key flow is wanted later behind a feature flag.
+// API that does not exist in the deployed web/iOS/Android build. All Gemini
+// calls now go through /server (see services/geminiService.ts) so no client-side
+// key or gate is needed here. Left in components/ in case a bring-your-own-key
+// flow is wanted later behind a feature flag.
 const App: React.FC = () => {
   return (
     <BrowserRouter>
