@@ -141,7 +141,7 @@ const Home: React.FC = () => {
               title="HSW365.CO" 
               desc="The official flagship store for premium Hoodstar365 apparel and streetwear drops." 
               icon="👕" 
-              link="https://hsw365.co" 
+              link="https://hsw365.net" 
               color="bg-[#00e0a4]"
               external
             />

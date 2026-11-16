@@ -8,7 +8,7 @@ const ProductCard: React.FC<{ name: string; price: string; img: string; desc: st
     setIsOrdering(true);
     // Redirect to the flagship store for real checkout
     setTimeout(() => {
-      window.location.href = "https://hsw365.co";
+      window.location.href = "https://hsw365.net";
       setIsOrdering(false);
     }, 1000);
   };
@@ -48,7 +48,7 @@ const Merch: React.FC = () => {
           <p className="text-[#a0a0a7] text-lg max-w-lg mt-4 uppercase tracking-widest text-xs font-bold">Premium apparel for the indie architect. Built for longevity.</p>
         </div>
         <div className="flex gap-4">
-          <a href="https://hsw365.co" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[#00e0a4] text-[#041b14] rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg shadow-[#00e0a4]/10">
+          <a href="https://hsw365.net" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[#00e0a4] text-[#041b14] rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg shadow-[#00e0a4]/10">
             VISIT HSW365.CO
           </a>
           <div className="hidden sm:block px-4 py-2 bg-[#121216] border border-[#1e1e23] rounded-full text-[10px] font-black uppercase tracking-widest text-[#a0a0a7]">
@@ -91,7 +91,7 @@ const Merch: React.FC = () => {
           </div>
         </div>
         <div className="flex-1 text-right">
-          <a href="https://hsw365.co" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-[#00e0a4] transition-all">
+          <a href="https://hsw365.net" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-[#00e0a4] transition-all">
             GO TO STORE ↗
           </a>
         </div>
