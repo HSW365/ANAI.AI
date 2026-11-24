@@ -1,5 +1,9 @@
 
+import { isOwner, onOwnerChange } from './ownerService';
+
 export const CREDITS_KEY = 'anai_neural_credits';
+// Same "unlimited" value the VIP plan uses; shown as ∞ / UNLIMITED in the app.
+export const UNLIMITED_CREDITS = 999;
 
 class CreditService {
   private listeners: ((credits: number) => void)[] = [];
@@ -9,9 +13,13 @@ class CreditService {
     if (localStorage.getItem(CREDITS_KEY) === null) {
       this.setCredits(5);
     }
+    // Owner signed in or out with the owner PIN: refresh every balance on screen.
+    onOwnerChange(() => this.notifyListeners());
   }
 
   getCredits(): number {
+    // The owner has VIP all access: unlimited credits, nothing is ever deducted.
+    if (isOwner()) return UNLIMITED_CREDITS;
     return parseInt(localStorage.getItem(CREDITS_KEY) || '0');
   }
 
@@ -21,6 +29,7 @@ class CreditService {
   }
 
   consumeCredit(): boolean {
+    if (isOwner()) return true;
     const current = this.getCredits();
     if (current > 0) {
       this.setCredits(current - 1);

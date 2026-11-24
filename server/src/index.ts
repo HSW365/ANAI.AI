@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import geminiRoutes from './geminiRoutes.js';
+import { isOwnerRequest } from './owner.js';
 
 const app = express();
 
@@ -22,6 +23,8 @@ const limiter = rateLimit({
   max: 20,
   standardHeaders: true,
   legacyHeaders: false,
+  // The owner (HSW365 owner PIN session, token verified with the owner-pin service) has unlimited usage.
+  skip: (req) => isOwnerRequest(req),
 });
 app.use('/api/gemini', limiter);
 

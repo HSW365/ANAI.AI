@@ -4,6 +4,8 @@
 // leaves the backend. Every exported function keeps its original name and
 // signature so no caller needs to change.
 
+import { ownerHeaders } from './ownerService';
+
 const API_BASE = import.meta.env.VITE_API_BASE || 'https://api.anaiai.co';
 const APP_SHARED_SECRET = import.meta.env.VITE_APP_SHARED_SECRET as string | undefined;
 
@@ -13,6 +15,7 @@ async function post<T = any>(path: string, body: unknown): Promise<T> {
     headers: {
       'Content-Type': 'application/json',
       ...(APP_SHARED_SECRET ? { 'x-app-secret': APP_SHARED_SECRET } : {}),
+      ...ownerHeaders(),
     },
     body: JSON.stringify(body),
   });

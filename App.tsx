@@ -21,6 +21,8 @@ import Support from './pages/Support';
 import SubmitTrack from './pages/SubmitTrack';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import OwnerVipBadge from './components/OwnerVipBadge';
+import { useOwner } from './services/ownerService';
 
 const NAV_LINKS: { label: string; to: string }[] = [
   { label: 'Home', to: '/' },
@@ -36,6 +38,7 @@ const NAV_LINKS: { label: string; to: string }[] = [
 const TopNav: React.FC = () => {
   const location = useLocation();
   const [open, setOpen] = useState(false);
+  const isOwner = useOwner();
 
   return (
     <header className="sticky top-0 z-40 bg-[#0a0a0f]/90 backdrop-blur-md border-b border-white/5">
@@ -57,10 +60,12 @@ const TopNav: React.FC = () => {
           ))}
         </nav>
         <div className="hidden lg:flex items-center gap-4">
+          {isOwner && <OwnerVipBadge />}
           <Link to="/settings" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">
             Settings
           </Link>
         </div>
+        {isOwner && <OwnerVipBadge className="lg:hidden ml-auto mr-2" />}
         <button
           onClick={() => setOpen(o => !o)}
           className="lg:hidden text-white/60 hover:text-white p-2"

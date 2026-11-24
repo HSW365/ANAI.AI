@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { creditService } from '../services/creditService';
 import { useNavigate } from 'react-router-dom';
+import OwnerVipBadge from '../components/OwnerVipBadge';
+import { useOwner } from '../services/ownerService';
 
 const PricingCard: React.FC<{ 
   tier: string; 
@@ -80,8 +82,41 @@ const PricingCard: React.FC<{
   );
 };
 
+// Shown to the owner instead of the plans and App Store billing: everything is included, nothing to buy.
+const OwnerAccessPanel: React.FC = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="relative p-[1px] rounded-[48px] bg-gradient-to-b from-purple-500 to-transparent mb-24">
+      <div className="absolute inset-0 blur-[40px] opacity-20 rounded-[48px] -z-10 bg-purple-500" />
+      <div className="relative bg-[#0b0b0c] rounded-[47px] p-10 lg:p-14 text-center">
+        <OwnerVipBadge className="mb-6" />
+        <h2 className="text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-none mb-4">
+          VIP <span className="text-purple-400">ALL ACCESS</span>
+        </h2>
+        <p className="text-white/40 text-xs font-bold uppercase tracking-[0.3em] max-w-xl mx-auto mb-10">
+          You're signed in as the owner. Every engine and every tier is unlocked, with unlimited generations and nothing to pay.
+        </p>
+        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-10">
+          {['Unlimited Neural Generations', 'Full Lab Access (All Engines)', 'No Billing, Ever'].map(f => (
+            <div key={f} className="p-6 bg-white/5 border border-white/10 rounded-[24px] text-[11px] font-bold text-white/70 uppercase tracking-tight">
+              <span className="text-purple-400 mr-2">✦</span>{f}
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={() => navigate('/build')}
+          className="px-12 py-5 rounded-2xl font-black uppercase tracking-widest bg-purple-600 text-white hover:bg-white hover:text-black shadow-lg shadow-purple-500/20 transition-all duration-300"
+        >
+          Start Building
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const Pricing: React.FC = () => {
   const [currentCredits, setCurrentCredits] = useState(0);
+  const isOwner = useOwner();
 
   useEffect(() => {
     return creditService.subscribe(setCurrentCredits);
@@ -91,9 +126,13 @@ const Pricing: React.FC = () => {
     <div className="px-6 py-16 max-w-7xl mx-auto min-h-screen">
       {/* Page Header */}
       <div className="text-center max-w-3xl mx-auto mb-20">
-        <div className="inline-block px-4 py-2 bg-white/5 rounded-full border border-white/10 mb-6">
-          <p className="text-[9px] font-black text-[#00e0a4] uppercase tracking-[0.3em]">Neural Vault Balance: {currentCredits === 999 ? '∞' : currentCredits} Credits</p>
-        </div>
+        {isOwner ? (
+          <div className="mb-6"><OwnerVipBadge /></div>
+        ) : (
+          <div className="inline-block px-4 py-2 bg-white/5 rounded-full border border-white/10 mb-6">
+            <p className="text-[9px] font-black text-[#00e0a4] uppercase tracking-[0.3em]">Neural Vault Balance: {currentCredits === 999 ? '∞' : currentCredits} Credits</p>
+          </div>
+        )}
         <h1 className="text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-[0.9] mb-6">
           CHOOSE YOUR <br/>
           <span className="text-[#00e0a4]">ACCESS LEVEL</span>
@@ -103,6 +142,10 @@ const Pricing: React.FC = () => {
         </p>
       </div>
 
+      {isOwner ? (
+        <OwnerAccessPanel />
+      ) : (
+        <>
       {/* Grid */}
       <div className="grid lg:grid-cols-3 gap-8 items-stretch mb-24">
         <PricingCard 
@@ -118,7 +161,7 @@ const Pricing: React.FC = () => {
             "Basic metadata exports"
           ]}
         />
-        
+      
         <PricingCard 
           tier="Pro"
           price="$15"
@@ -158,6 +201,8 @@ const Pricing: React.FC = () => {
            Subscriptions will be charged to your App Store account at confirmation of purchase. Subscriptions will automatically renew unless canceled within 24-hours before the end of the current period. Manage or cancel in your App Store Account Settings. Credits are digital utility tokens used to access platform processing features.
          </p>
       </div>
+        </>
+      )}
 
       {/* FAQ / Trust Section */}
       <div className="bg-[#121216] border border-white/5 rounded-[60px] p-16 relative overflow-hidden flex flex-col lg:flex-row items-center gap-16 shadow-2xl">
